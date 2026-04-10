@@ -1,136 +1,42 @@
-# Project B: CSV Mini Database & Query Engine
+# Project B - CSV Mini Database and Query Engine
 
 ## Overview
-This project implements a lightweight CSV-based mini database and query engine.  
-It is designed as an educational project to demonstrate how structured data can be parsed, indexed, and queried without relying on a full database system.
+This project involves the design and implementation of a lightweight database management system and query engine capable of reading, processing, and querying data stored in CSV (Comma-Separated Values) format. The goal is to create a mini database system that demonstrates fundamental database concepts including data storage, indexing, filtering, and query execution.
 
-The system loads CSV files into memory, optionally builds indexes, and executes simple queries using a minimal query grammar.
+## Project Description
+Project B is a comprehensive exercise in building database fundamentals from scratch. Students will develop a functional query engine that can handle CSV files as data sources, providing capabilities similar to a simplified relational database. The system will parse CSV files, load data into memory-efficient structures, and execute user queries with optimized performance.
 
----
+## Key Objectives
+- **Data Loading & Management**: Implement efficient CSV parsing and in-memory data representation
+- **Query Processing**: Build a query engine capable of executing SELECT, WHERE, ORDER BY, and JOIN operations
+- **Data Filtering & Sorting**: Support filtering records based on conditions and sorting by multiple columns
+- **Index Implementation**: Create simple indexing mechanisms to improve query performance
+- **Error Handling**: Implement robust error handling for malformed data and invalid queries
 
-## Learning Objectives
-This project teaches the following core concepts:
+## Core Features
+1. **CSV File Parsing**: Parse and validate CSV files with proper handling of delimiters and special characters
+2. **Column Operations**: Support operations on individual columns including data type detection
+3. **Query Execution**: Execute queries with WHERE clauses, ORDER BY, GROUP BY, and aggregate functions
+4. **Join Operations**: Implement basic join operations between multiple CSV tables
+5. **Performance Optimization**: Apply indexing and caching strategies to optimize query execution time
 
-- CSV parsing and data validation  
-- Handling quoted fields and delimiters  
-- In-memory data representation  
-- Indexing for faster data retrieval  
-- Designing a simple query language  
-- Understanding performance and memory trade-offs  
+## Technical Requirements
+- Implementation of a data structure to represent tables and records
+- Query parser for interpreting SQL-like statements
+- Query optimizer for efficient execution plans
+- Support for basic data types (STRING, INTEGER, FLOAT, BOOLEAN)
+- Memory-efficient storage and retrieval mechanisms
 
----
+## Expected Outcomes
+Upon completion, the system should:
+- Successfully load and parse CSV files of varying sizes
+- Execute complex queries with multiple conditions and joins
+- Return results in a structured format
+- Handle edge cases and invalid inputs gracefully
+- Demonstrate understanding of database design principles and query optimization
 
-## CSV Parsing
-The system reads and parses CSV files into an internal table structure.
-
-Key parsing considerations include:
-- Comma-separated values
-- Quoted fields containing commas
-- Escaped quotes within quoted fields
-- Header row processing
-- Handling malformed or inconsistent rows
-
-### CSV Parsing Approaches
-Two implementation approaches are acceptable:
-
-**Custom CSV Parser**  
-Students may implement a simple but robust CSV parser that correctly handles quoted fields and edge cases. This approach is recommended for learning purposes.
-
-**Lightweight CSV Library (Optional)**  
-A small external library may be used via a package manager such as vcpkg or Conan. This allows students to focus more on indexing and query execution logic.
-
----
-
-## Data Storage Model
-Parsed CSV data is stored entirely in memory using:
-- A list of column headers
-- A collection of rows
-- String-based field values
-
-This structure allows fast access and simple iteration over rows.
-
----
-
-## Indexing
-To improve query performance, the project supports basic indexing.
-
-Indexing concepts covered include:
-- Column-based indexing
-- Hash-based lookup
-- Mapping values to row locations
-- Memory overhead versus speed improvement
-
-Indexes are optional and can be enabled selectively per column.
-
----
-
-## Query Grammar
-The project supports a minimal SQL-like query language.
-
-Query features include:
-- Selecting all columns or specific columns
-- Filtering rows using a WHERE condition
-- Equality-based comparisons
-- Support for string and numeric values
-
-The grammar is intentionally simple to focus on parsing and execution rather than full SQL compliance.
-
----
-
-## Query Execution
-The query engine performs the following steps:
-- Parse the input query
-- Determine whether an index can be used
-- Execute either an indexed lookup or full table scan
-- Return matching rows
-
-This design highlights real-world trade-offs in database execution strategies.
-
----
-
-## Performance Trade-Offs
-This project emphasizes understanding performance considerations, including:
-- Full table scans versus indexed queries
-- Memory usage of indexes
-- Cost of preprocessing versus query-time speed
-- Simplicity versus extensibility
-
-Students are encouraged to test performance on small and large datasets.
-
----
-
-## Project Structure
-The project is organized into logical components such as:
-- CSV parsing
-- Table management
-- Index management
-- Query parsing
-- Query execution
-
-This separation of concerns mirrors real database system design.
-
----
-
-## Possible Extensions
-Optional extensions for advanced exploration include:
-- Multiple conditions in WHERE clauses
-- Sorting results
-- Limiting result counts
-- Case-insensitive queries
-- Persisting indexes to disk
-
----
-
-## Educational Value
-This project provides hands-on experience with:
-- File parsing
-- Data-oriented design
-- Basic database internals
-- Query planning and optimization
-
-It is suitable for systems programming, data structures, and software engineering courses.
-
----
-
-## License
-This project is released under the MIT License.
+## Technologies & Concepts
+- Data structures and algorithms for efficient querying
+- File I/O and parsing techniques
+- Query optimization and execution planning
+- Algorithm complexity analysis (Big O notation)
