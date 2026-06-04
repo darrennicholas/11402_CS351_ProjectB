@@ -228,20 +228,27 @@ bool evaluateCondition(const Row& row, const Condition& cond,
     if (cond.op == Op::EQ) return cell == cond.value;
     if (cond.op == Op::NE) return cell != cond.value;
     
-    // Try numeric comparison for GT/LT operators
-    if (cond.op == Op::GT || cond.op == Op::LT) {
+    // Numeric comparison for GT/LT operators
+    if (cond.op == Op::GT) {
         try {
             double cellVal = std::stod(cell);
             double condVal = std::stod(cond.value);
-            if (cond.op == Op::GT) return cellVal > condVal;
-            if (cond.op == Op::LT) return cellVal < condVal;
+            return cellVal > condVal;
         } catch (...) {
-            // Fall back to string comparison if conversion fails
+            return cell > cond.value;
         }
     }
     
-    if (cond.op == Op::GT) return cell > cond.value;
-    if (cond.op == Op::LT) return cell < cond.value;
+    if (cond.op == Op::LT) {
+        try {
+            double cellVal = std::stod(cell);
+            double condVal = std::stod(cond.value);
+            return cellVal < condVal;
+        } catch (...) {
+            return cell < cond.value;
+        }
+    }
+    
     return false;
 }
 
