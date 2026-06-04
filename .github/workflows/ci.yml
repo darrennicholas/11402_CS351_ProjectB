@@ -1,0 +1,42 @@
+name: CI - Build and Test
+
+on:
+  push:
+    branches: ["**"]          # Run on every push to any branch
+  pull_request:
+    branches: [main]          # Run on pull requests targeting main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Cache Google Test libraries to avoid rebuilding every time
+      - name: Cache Google Test
+        id: cache-gtest
+        uses: actions/cache@v3
+        with:
+          path: /usr/lib/libgtest*
+          key: ${{ runner.os }}-gtest
+
+      - name: Install Google Test and CMake
+        run: sudo apt-get update && sudo apt-get install -y libgtest-dev cmake
+
+      - name: Build Google Test (only if not cached)
+        if: steps.cache-gtest.outputs.cache-hit != 'true'
+        run: |
+          cd /usr/src/gtest
+          sudo cmake .
+          sudo make
+          sudo cp lib/*.a /usr/lib
+
+      # Compile your test file (adjust path and name as needed)
+      - name: Compile tests
+        run: |
+          g++ -std=c++17 -o test_runner test.cpp -lgtest -lgtest_main -pthread
+
+      - name: Run tests
+        run: ./test_runner
