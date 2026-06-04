@@ -36,15 +36,16 @@ std::vector<std::vector<std::string>> parseCSV(const std::string& filename) {
     };
 
     while (std::getline(file, line)) {
-        for (char ch : line) {
+        for (size_t i = 0; i < line.size(); ++i) {
+            char ch = line[i];
             if (inQuotes) {
                 if (ch == '"') {
-                    if (file.peek() == '"') {
-                        field += ch;
-                        file.get();
-                        field += '"';
+                    // Check if next character is also a quote (escaped quote)
+                    if (i + 1 < line.size() && line[i + 1] == '"') {
+                        field += '"';  // Add single quote to field
+                        ++i;           // Skip the second quote
                     } else {
-                        inQuotes = false;
+                        inQuotes = false;  // End of quoted field
                     }
                 } else {
                     field += ch;
@@ -226,6 +227,19 @@ bool evaluateCondition(const Row& row, const Condition& cond,
 
     if (cond.op == Op::EQ) return cell == cond.value;
     if (cond.op == Op::NE) return cell != cond.value;
+    
+    // Try numeric comparison for GT/LT operators
+    if (cond.op == Op::GT || cond.op == Op::LT) {
+        try {
+            double cellVal = std::stod(cell);
+            double condVal = std::stod(cond.value);
+            if (cond.op == Op::GT) return cellVal > condVal;
+            if (cond.op == Op::LT) return cellVal < condVal;
+        } catch (...) {
+            // Fall back to string comparison if conversion fails
+        }
+    }
+    
     if (cond.op == Op::GT) return cell > cond.value;
     if (cond.op == Op::LT) return cell < cond.value;
     return false;
@@ -393,7 +407,7 @@ TEST_F(CsvDbTest, WhereNotEquals) {
     }
 }
 
-// 5. WHERE with > (string comparison)
+// 5. WHERE with > (numeric comparison)
 TEST_F(CsvDbTest, WhereGreaterThan) {
     Query q = parseQuery("SELECT order_id, total FROM orders WHERE total > \"100.00\"");
     Table result = executeQuery(q, dataTable, headers, idxMgr);
@@ -405,7 +419,7 @@ TEST_F(CsvDbTest, WhereGreaterThan) {
     }
 }
 
-// 6. WHERE with < (string comparison)
+// 6. WHERE with < (numeric comparison)
 TEST_F(CsvDbTest, WhereLessThan) {
     Query q = parseQuery("SELECT order_id, total FROM orders WHERE total < \"30.00\"");
     Table result = executeQuery(q, dataTable, headers, idxMgr);
