@@ -1,0 +1,11 @@
+order_id,customer_name,product,total,status
+2001,Sofia Rodriguez,"Bluetooth Speaker",79.99,Shipped
+2002,Oliver Smith,"Laptop Stand",29.50,Processing
+2003,Ava Johnson,"Noise Cancelling Headphones",199.00,Delivered
+2004,Ethan Williams,"Gaming Mouse",49.95,Cancelled
+2005,Isabella Jones,"Mechanical Keyboard",129.99,Delivered
+2006,Mason Garcia,"USB Microphone",89.00,Shipped
+2007,Lucas Martinez,"LED Monitor Strip",15.75,Returned
+2008,Mia Davis,"Wireless Charger",25.00,Processing
+2009,Amelia Brown,"Desk Lamp with USB",34.99,Delivered
+2010,James Wilson,"External SSD 1TB",119.00,Shipped
